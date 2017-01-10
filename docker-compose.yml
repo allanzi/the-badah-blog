@@ -1,0 +1,65 @@
+# v2 sintax
+version: '2'
+
+# Named volumes
+volumes:
+
+  # MySQL Data
+  mysql:
+    driver: local
+
+services:
+
+  # MySQL (5.7)
+  mysql:
+    image: ambientum/mysql:5.7
+    container_name: badah-blog-mysql
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=api_aneel
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+
+  migration:
+    image: ambientum/php:7.0
+    container_name: badah-blog-migration
+    command: php artisan migrate
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8001:8080"
+    links:
+      - mysql
+
+  # PHP (with Caddy)
+  app:
+    image: ambientum/php:7.0-caddy
+    container_name: badah-blog-app
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8000:8080"
+    links:
+      - mysql
+
+  front-dependencies:
+    image: allanzi/node:latest
+    container_name: badah-blog-front-dependencies
+    command: npm install
+    volumes:
+      - .:/var/www/app
+    ports:
+      - 8080:8080
+
+  gulp-watch:
+    image: allanzi/node:latest
+    container_name: badah-blog-gulp-watch
+    command: gulp watch
+    volumes:
+      - .:/var/www/app
+    ports:
+      - 8081:8080
