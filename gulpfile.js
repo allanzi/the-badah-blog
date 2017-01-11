@@ -20,6 +20,7 @@ var scripts = [
     vendors + 'jquery/dist/jquery.min.js',
     vendors + 'material-design-lite/material.min.js',
     vendors + 'owl.carousel/dist/owl.carousel.min.js',
+    './resources/assets/scripts/slider.js',
     './resources/assets/scripts/core.js'
 ];
 
@@ -28,7 +29,9 @@ var styles = [
     vendors + 'owl.carousel/dist/assets/owl.carousel.min.css',
     vendors + 'owl.carousel/dist/assets/owl.theme.default.min.css',
     './resources/assets/styles/colors.css',
+    './resources/assets/styles/container.css',
     './resources/assets/styles/core.css',
+    './resources/assets/styles/slider.css',
     './resources/assets/styles/header.css',
 ];
 
